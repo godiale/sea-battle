@@ -1,7 +1,5 @@
 package game;
 
-import java.util.stream.Stream;
-
 public class AutoPlayer implements IPlayer {
 
     private int curX;
@@ -9,14 +7,14 @@ public class AutoPlayer implements IPlayer {
 
     @Override
     public void placeShips(IBoard board, IShipList ships) {
-        Stream.of(ships.getShips()).forEach(ship ->
-            board.placeShip(board.getXSize()-1, board.getYSize()-1));
+        ships.getShips().stream().forEach(ship ->
+            board.placeShip(ship, board.getXSize()-1, board.getYSize()-1));
     }
 
     @Override
     public Strike nextStrike(IBoard defend_A, IBoard attack_A) {
         final Strike ret = new Strike(curX, curY);
-        if (curX++ >= attack_A.getXSize()) {
+        if (curX++ >= attack_A.getXSize()-1) {
             curX = 0;
             curY++;
         }
