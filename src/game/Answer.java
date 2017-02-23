@@ -1,11 +1,12 @@
 package game;
 
 public enum Answer {
-    MISS,
+    // Go in descending priority.
+    // For example FINISHED is returned, not KILLED or HIT.
     MISS_AGAIN,
-    HIT,
-    HIT_AGAIN,
+    MISS,
+    FINISHED,
     KILLED,
-    KILLED_AGAIN,
-    FINISHED
+    HIT_AGAIN,
+    HIT,
 }
