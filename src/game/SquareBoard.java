@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class SquareBoard implements IBoard {
 
@@ -54,8 +55,40 @@ public class SquareBoard implements IBoard {
     }
 
     @Override
-    public Answer checkStrike(Point strike) {
-        return Answer.MISS;
+    public Answer checkStrike(Point p) {
+        final int shipIdx = coord2ships[p.x][p.y];
+        if (shipIdx < 0) {
+            if (strikesCount[p.x][p.y] > 0) {
+                return Answer.MISS_AGAIN;
+            } else {
+                return Answer.MISS;
+            }
+        }
+
+        // Now we mark point "p" as hit, and estimate where we are, then return back
+        strikesCount[p.x][p.y]++;
+        try {
+            IShip hitShip = ships2coord.get(shipIdx);
+            Predicate<Point> isHit = v -> coord2ships[v.x][v.y] >= 0;
+            if (hitShip.getCoord().stream().allMatch(isHit)) {
+                // We killed one ship, lets check if we killed all ships
+                if (ships2coord.stream().
+                        flatMap(ship -> ship.getCoord().stream()).
+                            allMatch(isHit)) {
+                    return Answer.FINISHED;
+                } else {
+                    return Answer.KILLED;
+                }
+            }
+        } finally {
+            strikesCount[p.x][p.y]--;
+        }
+
+        if (strikesCount[p.x][p.y] > 0) {
+            return Answer.HIT_AGAIN;
+        } else {
+            return Answer.HIT;
+        }
     }
 
     @Override
