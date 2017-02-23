@@ -6,6 +6,6 @@ public interface IBoard {
     public int getYSize();
 
     public void placeShip(IShip ship, int i, int j);
-    public Answer checkStrike(Strike strike);
-    public void recordStrike(Strike strike);
+    public Answer checkStrike(Point p);
+    public void recordStrike(Point p);
 }

@@ -24,22 +24,22 @@ public class LogGamePlay extends GamePlay {
                 break; // Logic defect, no-one wins
             }
             if (!winner_B) {
-                Strike strike = player_A.nextStrike(defend_A, attack_A);
+                Point strike = player_A.nextStrike(defend_A, attack_A);
                 Answer answer = defend_B.checkStrike(strike);
                 attack_A.recordStrike(strike);
                 defend_B.recordStrike(strike);
-                System.out.println(MessageFormat.format("A({0}): {1} --> {2}",
+                System.out.println(MessageFormat.format("A({0}): >{1} --> {2}",
                                                          movesCounter, strike, answer));
                 if (answer == Answer.FINISHED) {
                     winner_A = true;
                 }
             }
             if (!winner_A) {
-                Strike strike = player_B.nextStrike(defend_B, attack_B);
+                Point strike = player_B.nextStrike(defend_B, attack_B);
                 Answer answer = defend_A.checkStrike(strike);
                 attack_B.recordStrike(strike);
                 defend_A.recordStrike(strike);
-                System.out.println(MessageFormat.format("B({0}): {1} --> {2}",
+                System.out.println(MessageFormat.format("B({0}): >{1} --> {2}",
                                                          movesCounter, strike, answer));
                 if (answer == Answer.FINISHED) {
                     winner_B = true;

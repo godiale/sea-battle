@@ -54,12 +54,12 @@ public class SquareBoard implements IBoard {
     }
 
     @Override
-    public Answer checkStrike(Strike strike) {
+    public Answer checkStrike(Point strike) {
         return Answer.MISS;
     }
 
     @Override
-    public void recordStrike(Strike strike) {
-        strikesCount[strike.x][strike.y]++;
+    public void recordStrike(Point p) {
+        strikesCount[p.x][p.y]++;
     }
 }
