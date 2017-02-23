@@ -28,7 +28,7 @@ public class LogGamePlay extends GamePlay {
                 Answer answer = defend_B.checkStrike(strike);
                 attack_A.recordStrike(strike);
                 defend_B.recordStrike(strike);
-                System.out.println(MessageFormat.format("A({0}): strike {1} --> {2}",
+                System.out.println(MessageFormat.format("A({0}): {1} --> {2}",
                                                          movesCounter, strike, answer));
                 if (answer == Answer.FINISHED) {
                     winner_A = true;
@@ -39,7 +39,7 @@ public class LogGamePlay extends GamePlay {
                 Answer answer = defend_A.checkStrike(strike);
                 attack_B.recordStrike(strike);
                 defend_A.recordStrike(strike);
-                System.out.println(MessageFormat.format("B({0}): strike {1} --> {2}",
+                System.out.println(MessageFormat.format("B({0}): {1} --> {2}",
                                                          movesCounter, strike, answer));
                 if (answer == Answer.FINISHED) {
                     winner_B = true;
@@ -47,10 +47,12 @@ public class LogGamePlay extends GamePlay {
             }
         }
         if (movesCounter < MAX_MOVES) {
-            System.out.println(MessageFormat.format("Game over after {0} moves", movesCounter));
+            System.out.println(MessageFormat.format("Game over after {0} moves",
+                                                     movesCounter));
         }
         else {
-            System.out.println(MessageFormat.format("Foced draw after {0} moves", movesCounter-1));
+            System.out.println(MessageFormat.format("Forced draw after {0} moves",
+                                                     movesCounter-1));
         }
     }
 }
