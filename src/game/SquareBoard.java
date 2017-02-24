@@ -80,7 +80,7 @@ public class SquareBoard implements IBoard {
                     return Answer.KILLED;
                 }
             }
-        } finally  {
+        } finally {
             strikesCount[p.x][p.y]--;
         }
 
