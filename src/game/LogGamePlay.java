@@ -27,9 +27,7 @@ public class LogGamePlay extends GamePlay {
             }
             if (!winner_B) {
                 Point strike = player_A.nextStrike(defend_A, attack_A);
-                Answer answer = defend_B.checkStrike(strike);
-                attack_A.recordStrike(strike);
-                defend_B.recordStrike(strike);
+                Answer answer = defend_B.makeStrike(strike);
                 System.out.println(MessageFormat.format("A({0}): >{1} --> {2}",
                                                          moveNumber, strike, answer));
                 if (answer == Answer.FINISHED) {
@@ -38,9 +36,7 @@ public class LogGamePlay extends GamePlay {
             }
             if (!winner_A) {
                 Point strike = player_B.nextStrike(defend_B, attack_B);
-                Answer answer = defend_A.checkStrike(strike);
-                attack_B.recordStrike(strike);
-                defend_A.recordStrike(strike);
+                Answer answer = defend_A.makeStrike(strike);
                 System.out.println(MessageFormat.format("B({0}): >{1} --> {2}",
                                                          moveNumber, strike, answer));
                 if (answer == Answer.FINISHED) {

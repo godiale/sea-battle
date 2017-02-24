@@ -8,7 +8,7 @@ public class AutoPlayer implements IPlayer {
     @Override
     public void placeShips(IBoard board, IShipList ships) {
         ships.getShips().stream().forEach(ship ->
-            board.placeShip(ship, board.getXSize()-1, board.getYSize()-1));
+            board.placeShip(ship, 0, 1));
     }
 
     @Override
