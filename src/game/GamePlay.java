@@ -2,8 +2,8 @@ package game;
 
 public abstract class GamePlay {
 
-    protected IBoard attack_A, defend_A;
-    protected IBoard attack_B, defend_B;
+    protected IBoard board_A;
+    protected IBoard board_B;
 
     protected IShipList ships;
 
@@ -11,10 +11,8 @@ public abstract class GamePlay {
     protected IPlayer player_B;
 
     public void createBoards(IBoardFactory boardFactory) {
-        attack_A = boardFactory.createBoard();
-        defend_A = boardFactory.createBoard();
-        attack_B = boardFactory.createBoard();
-        defend_B = boardFactory.createBoard();
+        board_A = boardFactory.createBoard();
+        board_B = boardFactory.createBoard();
     }
 
     public void setShips(IShipList ships) {

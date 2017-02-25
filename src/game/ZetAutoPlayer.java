@@ -6,9 +6,9 @@ public class ZetAutoPlayer extends AutoPlayer {
     private int curY;
 
     @Override
-    public Point nextStrike(IBoard defend_A, IBoard attack_A) {
+    public Point nextStrike() {
         final Point ret = new Point(curX, curY);
-        if (curX++ >= attack_A.getXSize()-1) {
+        if (curX++ >= sizeX-1) {
             curX = 0;
             curY++;
         }
