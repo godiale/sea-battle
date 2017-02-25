@@ -34,7 +34,7 @@ public class SquareBoard implements IBoard {
     }
 
     @Override
-    public void placeShip(IShip ship, int i, int j) {
+    public void placeShip(IShip ship, int i, int j) throws InvalidPlacementException {
 
         class PlacedShip implements IShip {
             private List<Point> points;
@@ -49,6 +49,18 @@ public class SquareBoard implements IBoard {
         }
 
         IShip placedShip = new PlacedShip(ship, i, j);
+
+        Predicate<Point> isOutBoard = v -> v.x < 0 || v.x >= size ||
+                                           v.y < 0 || v.y >= size;
+        if (placedShip.getCoord().stream().anyMatch(isOutBoard)) {
+            throw new InvalidPlacementException("Ship is outside of the board");
+        }
+
+        Predicate<Point> isIntersection = v -> coord2ships[v.x][v.y] >= 0;
+        if (placedShip.getCoord().stream().anyMatch(isIntersection)) {
+            throw new InvalidPlacementException("Ships intersection");
+        }
+
         final int shipIdx = ships2coord.size();
         ships2coord.add(placedShip);
         placedShip.getCoord().stream().forEach(p -> coord2ships[p.x][p.y] = shipIdx);

@@ -1,5 +1,7 @@
 package game;
 
+import game.IBoard.InvalidPlacementException;
+
 public class AutoPlayer implements IPlayer {
 
     private int curX;
@@ -7,8 +9,11 @@ public class AutoPlayer implements IPlayer {
 
     @Override
     public void placeShips(IBoard board, IShipList ships) {
-        ships.getShips().stream().forEach(ship ->
-            board.placeShip(ship, 0, 1));
+        for (IShip ship : ships.getShips()) {
+            try  {
+                board.placeShip(ship, 0, 1);
+            } catch (InvalidPlacementException e) {}
+        }
     }
 
     @Override
