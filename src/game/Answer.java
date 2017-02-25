@@ -5,8 +5,8 @@ public enum Answer {
     // For example FINISHED is returned, not KILLED or HIT.
     MISS_AGAIN,
     MISS,
+    HIT_AGAIN,
     FINISHED,
     KILLED,
-    HIT_AGAIN,
     HIT,
 }

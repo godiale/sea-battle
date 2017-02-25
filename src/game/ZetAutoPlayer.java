@@ -12,6 +12,6 @@ public class ZetAutoPlayer extends AutoPlayer {
             curX = 0;
             curY++;
         }
-        return ret;
+        return new Point(0,0);
     }
 }

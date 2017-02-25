@@ -46,10 +46,11 @@ public class SquareBoardTest {
         board.placeShip(new Boat(), 0, 1);
         board.placeShip(new Boat(), 1, 0);
         board.placeShip(new Boat(), 1, 1);
-        assertEquals(Answer.KILLED,   board.makeStrike(new Point(1,0)));
-        assertEquals(Answer.KILLED,   board.makeStrike(new Point(0,0)));
-        assertEquals(Answer.KILLED,   board.makeStrike(new Point(1,1)));
-        assertEquals(Answer.FINISHED, board.makeStrike(new Point(0,1)));
+        assertEquals(Answer.KILLED,    board.makeStrike(new Point(1,0)));
+        assertEquals(Answer.HIT_AGAIN, board.makeStrike(new Point(1,0)));
+        assertEquals(Answer.KILLED,    board.makeStrike(new Point(0,0)));
+        assertEquals(Answer.KILLED,    board.makeStrike(new Point(1,1)));
+        assertEquals(Answer.FINISHED,  board.makeStrike(new Point(0,1)));
     }
 
     @Test
@@ -62,6 +63,7 @@ public class SquareBoardTest {
         assertEquals(Answer.HIT_AGAIN, board.makeStrike(new Point(0,0)));
         assertEquals(Answer.MISS,      board.makeStrike(new Point(0,1)));
         assertEquals(Answer.FINISHED,  board.makeStrike(new Point(1,0)));
+        assertEquals(Answer.HIT_AGAIN, board.makeStrike(new Point(1,0)));
     }
 
     @Test

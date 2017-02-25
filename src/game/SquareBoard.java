@@ -87,6 +87,10 @@ public class SquareBoard implements IBoard {
             }
         }
 
+        if (strikesCount[p.x][p.y] > 1) {
+            return Answer.HIT_AGAIN;
+        }
+
         IShip hitShip = ships2coord.get(shipIdx);
         Predicate<Point> isHit = v -> strikesCount[v.x][v.y] > 0;
         if (hitShip.getCoord().stream().allMatch(isHit)) {
@@ -100,11 +104,7 @@ public class SquareBoard implements IBoard {
             }
         }
 
-        if (strikesCount[p.x][p.y] > 1) {
-            return Answer.HIT_AGAIN;
-        } else {
-            return Answer.HIT;
-        }
+        return Answer.HIT;
     }
 
     @Override

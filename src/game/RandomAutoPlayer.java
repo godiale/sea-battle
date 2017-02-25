@@ -10,7 +10,7 @@ public class RandomAutoPlayer extends AutoPlayer {
             final int x = ThreadLocalRandom.current().nextInt(0, sizeX);
             final int y = ThreadLocalRandom.current().nextInt(0, sizeY);
             if (myStrikes[x][y] == 0) {
-                return new Point(x,y);
+                return new Point(0,0);
             }
         }
     }
