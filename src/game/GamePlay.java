@@ -10,21 +10,24 @@ public abstract class GamePlay {
     protected IPlayer player_A;
     protected IPlayer player_B;
 
-    public void createBoards(IBoardFactory boardFactory) {
-        board_A = boardFactory.createBoard();
-        board_B = boardFactory.createBoard();
-    }
-
     public void setShips(IShipList ships) {
         this.ships = ships;
     }
 
-    public void setPlayer_A(IPlayer player_A) {
-        this.player_A = player_A;
+    public void setPlayer_A(IPlayer player) {
+        player_A = player;
     }
 
-    public void setPlayer_B(IPlayer player_B) {
-        this.player_B = player_B;
+    public void setBoard_A(IBoard board) {
+        board_A = board;
+    }
+
+    public void setPlayer_B(IPlayer player) {
+        player_B = player;
+    }
+
+    public void setBoard_B(IBoard board) {
+        board_B = board;
     }
 
     public abstract void run();
