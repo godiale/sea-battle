@@ -4,65 +4,73 @@ import java.text.MessageFormat;
 
 public class LogGamePlay extends GamePlay {
 
-    @Override
-    public void run() {
-        // Must win after hitting all squares on the board!
-        final int MAX_MOVE_A = board_A.getXSize() * board_A.getYSize();
-        final int MAX_MOVE_B = board_B.getXSize() * board_B.getYSize();
+    private class PlayerState {
+        private final String ID;
+        private final int MAX_MOVE;
+        private IPlayer player;
+        private IBoard  board;
+        private boolean isWinner;
+        private boolean lastHit;
+        private int moveNumber;
 
-        player_A.placeShips(board_A, ships);
-        System.out.println("A: ships");
-        board_A.printShips();
+        public PlayerState(String ID, IPlayer player, IBoard board) {
+         // Must win after hitting all squares on the board!
+            MAX_MOVE = board.getXSize() * board.getYSize();
+            this.ID     = ID;
+            this.player = player;
+            this.board  = board;
+        }
 
-        player_B.placeShips(board_B, ships);
-        System.out.println("B: ships");
-        board_B.printShips();
+        public void placeShips() {
+            player.placeShips(board, ships); // ships are common
+            System.out.println(ID + ": ships");
+            board.printShips();
+        }
 
-        boolean winner_A = false, hit_A = false;
-        boolean winner_B = false, hit_B = false;
-        int moveNumber_A = 0, moveNumber_B = 0;
-
-        while (!winner_A && !winner_B) {
-            if (moveNumber_A >= MAX_MOVE_A && moveNumber_B >= MAX_MOVE_B) {
-                break; // Logic defect from both sides
-            }
-            if (!hit_B) {
-                moveNumber_A++;
-                Point strike = player_A.nextStrike();
-                Answer answer = board_B.makeStrike(strike);
-                player_A.recordMove(strike, answer);
-                System.out.println(MessageFormat.format("A({0}): >{1} --> {2}",
-                                                         moveNumber_A, strike, answer));
-                if (answer == Answer.FINISHED || answer == Answer.KILLED || answer == Answer.HIT) {
-                    hit_A = true;
-                    if (answer == Answer.FINISHED) {
-                        winner_A = true;
-                    }
-                } else {
-                    hit_A = false;
+        public void strike(IBoard board) {
+            moveNumber++;
+            Point strike = player.nextStrike();
+            Answer answer = board.makeStrike(strike);
+            player.recordMove(strike, answer);
+            System.out.println(MessageFormat.format("{0}({1}): >{2} --> {3}",
+                                                     ID, moveNumber, strike, answer));
+            if (answer == Answer.FINISHED || answer == Answer.KILLED || answer == Answer.HIT) {
+                lastHit = true;
+                if (answer == Answer.FINISHED) {
+                    isWinner = true;
                 }
-            }
-            if (!hit_A) {
-                moveNumber_B++;
-                Point strike = player_B.nextStrike();
-                Answer answer = board_A.makeStrike(strike);
-                player_B.recordMove(strike, answer);
-                System.out.println(MessageFormat.format("B({0}): >{1} --> {2}",
-                                                         moveNumber_B, strike, answer));
-                if (answer == Answer.FINISHED || answer == Answer.KILLED || answer == Answer.HIT) {
-                    hit_B = true;
-                    if (answer == Answer.FINISHED) {
-                        winner_B = true;
-                    }
-                }
-                else {
-                    hit_B = false;
-                }
+            } else {
+                lastHit = false;
             }
         }
-        if (!winner_A && !winner_B) {
+
+        boolean tooManyMoves() {
+            return moveNumber >= MAX_MOVE;
+        }
+    }
+
+    @Override
+    public void run() {
+        PlayerState state_A = new PlayerState("A", player_A, board_A);
+        PlayerState state_B = new PlayerState("B", player_B, board_B);
+
+        state_A.placeShips();
+        state_B.placeShips();
+
+        while (!state_A.isWinner && !state_B.isWinner) {
+            if (state_A.tooManyMoves() && state_B.tooManyMoves()) {
+                break; // Logic defect from both sides
+            }
+            if (!state_B.lastHit) {
+                state_A.strike(board_B);
+            }
+            if (!state_A.lastHit) {
+                state_B.strike(board_A);
+            }
+        }
+        if (!state_A.isWinner && !state_B.isWinner) {
             System.out.println(MessageFormat.format("Forced draw after moves done: A={0}, B={1}",
-                                                     moveNumber_A, moveNumber_B));
+                                                     state_A.moveNumber, state_B.moveNumber));
         }
     }
 }
