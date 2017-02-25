@@ -1,28 +1,25 @@
 package game;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import game.IBoard.InvalidPlacementException;
 
-public class AutoPlayer implements IPlayer {
-
-    private int curX;
-    private int curY;
+public abstract class AutoPlayer implements IPlayer {
 
     @Override
     public void placeShips(IBoard board, IShipList ships) {
         for (IShip ship : ships.getShips()) {
-            try  {
-                board.placeShip(ship, 0, 1);
-            } catch (InvalidPlacementException e) {}
-        }
-    }
+            boolean placed = false;
+            while (!placed) {
+                try  {
+                    board.placeShip(ship, ThreadLocalRandom.current().nextInt(0, board.getXSize()),
+                                          ThreadLocalRandom.current().nextInt(0, board.getYSize()));
 
-    @Override
-    public Point nextStrike(IBoard defend_A, IBoard attack_A) {
-        final Point ret = new Point(curX, curY);
-        if (curX++ >= attack_A.getXSize()-1) {
-            curX = 0;
-            curY++;
+                    placed = true;
+                } catch (InvalidPlacementException e) {
+                    // That's normal for random placement
+                }
+            }
         }
-        return ret;
     }
 }

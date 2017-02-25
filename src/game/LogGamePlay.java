@@ -13,7 +13,12 @@ public class LogGamePlay extends GamePlay {
         final int MAX_MOVE = attack_A.getXSize() * attack_A.getYSize();
 
         player_A.placeShips(defend_A, ships);
+        System.out.println("A: ships");
+        defend_A.printShips();
+
         player_B.placeShips(defend_B, ships);
+        System.out.println("B: ships");
+        defend_B.printShips();
 
         boolean winner_A = false;
         boolean winner_B = false;
