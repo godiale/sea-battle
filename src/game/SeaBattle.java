@@ -1,10 +1,15 @@
 package game;
 
+import game.Point.Notation;
+
 public class SeaBattle {
 
     public static void main(String[] args) {
-        GamePlay gameplay = new LogGamePlay();
+        Point.setNotation(Notation.NUMERICAL);
         IBoardFactory boardFactory = new SquareBoardFactory(5);
+
+        GamePlay gameplay = new LogGamePlay();
+
         gameplay.setBoard_A(boardFactory.createBoard());
         gameplay.setBoard_B(boardFactory.createBoard());
         gameplay.setShips(new ManualShipList(new Launch(),
@@ -13,6 +18,7 @@ public class SeaBattle {
                                              new Boat()));
         gameplay.setPlayer_A(new RandomAutoPlayer());
         gameplay.setPlayer_B(new ZetAutoPlayer());
+
         gameplay.run();
     }
 }

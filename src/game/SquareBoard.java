@@ -1,7 +1,6 @@
 package game;
 
 import java.io.StringWriter;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -113,7 +112,7 @@ public class SquareBoard implements IBoard {
             StringWriter str = new StringWriter();
             str.write(ship.getOriginalShip().getClass().getSimpleName() + ": ");
             for (Point p : ship.getCoord()) {
-                str.write(MessageFormat.format("({0},{1}) ", p.x, p.y));
+                str.write(p.toString() + " ");
             }
             System.out.println(str.toString());
         }
