@@ -39,27 +39,42 @@ public class Point {
         return x == oPoint.x && y == oPoint.y;
     }
 
-    Point(String s) {
+    Point(String str) {
         if (NOTATION == Notation.NUMERICAL) {
             String regexp = "\\((\\d+),(\\d+)\\)";
             Pattern pattern = Pattern.compile(regexp);
-            Matcher matcher = pattern.matcher(s);
+            Matcher matcher = pattern.matcher(str);
             if (matcher.find()) {
                 this.x = Integer.valueOf(matcher.group(1));
                 this.y = Integer.valueOf(matcher.group(2));
             }
             else {
-
+                throw new IllegalArgumentException("Wrong point format: " + str);
             }
         }
         else {
-
+            String regexp = "([A-Z]+)(\\d+)";
+            Pattern pattern = Pattern.compile(regexp);
+            Matcher matcher = pattern.matcher(str);
+            if (matcher.find()) {
+                String s = matcher.group(1);
+                int n = -1, m = 1;
+                for (int i = s.length()-1; i >= 0; --i) {
+                    n = n + m * (s.charAt(i) - 'A' + 1);
+                    m *= 26;
+                }
+                this.x = n;
+                this.y = Integer.valueOf(matcher.group(2)) - 1;
+            }
+            else {
+                throw new IllegalArgumentException("Wrong point format: " + str);
+            }
         }
     }
 
     @Override
     public String toString() {
-        if (NOTATION == Notation.NUMERICAL) {
+        if (NOTATION == Notation.NUMERICAL || x < 0 || y < 0) {
             return MessageFormat.format("({0},{1})", x, y);
         }
         else {
