@@ -19,8 +19,10 @@ public abstract class AutoPlayer implements IPlayer {
             boolean placed = false;
             while (!placed) {
                 try  {
-                    board.placeShip(ship, ThreadLocalRandom.current().nextInt(0, sizeX),
-                                          ThreadLocalRandom.current().nextInt(0, sizeY));
+                    board.placeShip(ship,
+                            ThreadLocalRandom.current().nextInt(0, sizeX),
+                            ThreadLocalRandom.current().nextInt(0, sizeY),
+                            Direction.values()[ThreadLocalRandom.current().nextInt(0,2)]);
                     placed = true;
                 } catch (InvalidPlacementException e) {
                     // That's normal for random placement

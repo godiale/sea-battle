@@ -13,10 +13,14 @@ public class SquareBoard implements IBoard {
         IShip originalShip;
         private List<Point> points;
 
-        public PlacedShip(IShip ship, int i, int j) {
+        public PlacedShip(IShip ship, int i, int j, Direction d) {
             originalShip = ship;
             points = new ArrayList<Point>();
-            ship.getCoord().stream().forEach(p -> points.add(new Point(p.x+i, p.y+j)));
+            ship.getCoord().stream().forEach(
+                    p -> points.add(
+                            d == Direction.HOR
+                                ? new Point(p.x+i, p.y+j)
+                                : new Point(p.y+i, p.x+j)));
         }
         @Override
         public List<Point> getCoord() {
@@ -54,8 +58,9 @@ public class SquareBoard implements IBoard {
     }
 
     @Override
-    public void placeShip(IShip ship, int i, int j) throws InvalidPlacementException {
-        PlacedShip placedShip = new PlacedShip(ship, i, j);
+    public void placeShip(IShip ship, int i, int j, Direction d)
+                                            throws InvalidPlacementException {
+        PlacedShip placedShip = new PlacedShip(ship, i, j, d);
 
         Predicate<Point> isOutBoard = v -> v.x < 0 || v.x >= size ||
                                            v.y < 0 || v.y >= size;
