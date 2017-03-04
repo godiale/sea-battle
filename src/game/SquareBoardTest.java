@@ -1,6 +1,5 @@
 package game;
 
-
 import static game.Direction.HOR;
 import static game.Direction.VER;
 import static org.junit.Assert.assertEquals;

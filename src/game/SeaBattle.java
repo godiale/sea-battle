@@ -16,8 +16,8 @@ public class SeaBattle {
                                              new Launch(),
                                              new Boat(),
                                              new Boat()));
-        gameplay.setPlayer_A(new RandomAutoPlayer());
-        gameplay.setPlayer_B(new ZetAutoPlayer());
+        gameplay.setPlayer_A(new RandomAutoPlayer("Rand"));
+        gameplay.setPlayer_B(new ZetAutoPlayer("Zeta"));
 
         gameplay.run();
     }

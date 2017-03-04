@@ -4,6 +4,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomAutoPlayer extends AutoPlayer {
 
+    public RandomAutoPlayer(String name) {
+        super(name);
+    }
+
     @Override
     public Point nextStrike() {
         while (true) {

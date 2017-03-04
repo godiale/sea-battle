@@ -9,6 +9,12 @@ public abstract class AutoPlayer implements IPlayer {
     protected int [][] myStrikes;
     protected int sizeX, sizeY;
 
+    private String name;
+
+    public AutoPlayer(String name) {
+        this.name = name;
+    }
+
     @Override
     public void placeShips(IBoard board, IShipList ships) {
         sizeX = board.getXSize();
@@ -34,5 +40,10 @@ public abstract class AutoPlayer implements IPlayer {
     @Override
     public void recordMove(Point strike, Answer answer) {
         myStrikes[strike.x][strike.y]++;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }
