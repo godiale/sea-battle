@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 
 public class LogGamePlay extends GamePlay {
 
+    private boolean printShips;
+
     private class PlayerState {
         private final int MAX_MOVE;
         private IPlayer player;
@@ -13,16 +15,19 @@ public class LogGamePlay extends GamePlay {
         private int moveNumber;
 
         public PlayerState(IPlayer player, IBoard board) {
-         // Must win after hitting all squares on the board!
+            // Must win after hitting all squares on the board!
             MAX_MOVE = board.getXSize() * board.getYSize();
             this.player = player;
             this.board  = board;
         }
 
         public void placeShips() {
-            player.placeShips(board, ships); // ships are common
-            System.out.println(player.getName() + ": ships");
-            board.printShips();
+            player.placeShips(board, ships);
+
+            if (printShips) {
+                System.out.println(player.getName() + ": ships");
+                board.printShips();
+            }
         }
 
         public void strike(IBoard board) {
@@ -53,6 +58,23 @@ public class LogGamePlay extends GamePlay {
 
     @Override
     public void run() {
+        if (board_A.getXSize() != board_B.getXSize() ||
+            board_A.getYSize() != board_B.getYSize()) {
+            throw new IllegalStateException("Boards of players should be equal!");
+        }
+
+        if (player_A instanceof ConsolePlayer ||
+            player_B instanceof ConsolePlayer) {
+            printShips = false;
+        }
+        else {
+            printShips = true;
+        }
+
+        System.out.println(MessageFormat.format(
+                "Starting game on board {0} to {1}",
+                new Point(0,0), new Point(board_A.getXSize()-1, board_A.getYSize()-1)));
+
         PlayerState state_A = new PlayerState(player_A, board_A);
         PlayerState state_B = new PlayerState(player_B, board_B);
 

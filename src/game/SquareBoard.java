@@ -29,6 +29,10 @@ public class SquareBoard implements IBoard {
         public IShip getOriginalShip() {
             return originalShip;
         }
+        @Override
+        public String getName() {
+            return null;
+        }
     }
 
     private int size;

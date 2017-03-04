@@ -6,6 +6,11 @@ import java.util.List;
 public class Launch implements IShip {
 
     @Override
+    public String getName() {
+        return "Launch";
+    }
+
+    @Override
     public List<Point> getCoord() {
         ArrayList<Point> points = new ArrayList<Point>();
         points.add(new Point(0,0));

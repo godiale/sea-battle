@@ -5,7 +5,7 @@ import game.Point.Notation;
 public class SeaBattle {
 
     public static void main(String[] args) {
-        Point.setNotation(Notation.NUMERICAL);
+        Point.setNotation(Notation.ALPHABETIC);
         IBoardFactory boardFactory = new SquareBoardFactory(5);
 
         GamePlay gameplay = new LogGamePlay();
@@ -16,8 +16,8 @@ public class SeaBattle {
                                              new Launch(),
                                              new Boat(),
                                              new Boat()));
-        gameplay.setPlayer_A(new RandomAutoPlayer("Rand"));
-        gameplay.setPlayer_B(new ZetAutoPlayer("Zeta"));
+        gameplay.setPlayer_A(new ConsolePlayer());
+        gameplay.setPlayer_B(new RandomAutoPlayer("Random"));
 
         gameplay.run();
     }
