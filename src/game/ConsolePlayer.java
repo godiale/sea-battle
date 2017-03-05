@@ -18,14 +18,14 @@ public class ConsolePlayer implements IPlayer {
     }
 
     @Override
-    public void placeShips(IBoard board, IShipList ships) {
-        System.out.println("Please place ships");
+    public void placeShips(IBoard board, ShipList ships) {
+        io.printLine("Please place ships");
         for (IShip ship : ships.getShips()) {
             while (true) {
                 String placement = io.readLine(ship.getName() + ": ");
                 String[] parts = placement.split(",");
                 if (parts.length < 2) {
-                    System.out.println("Please enter point and direction");
+                    io.printLine("Invalid format: " + placement);
                     continue;
                 }
                 Point p;
@@ -33,7 +33,7 @@ public class ConsolePlayer implements IPlayer {
                     p = new Point(parts[0]);
                 }
                 catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
+                    io.printLine("Invalid format of the point: " + parts[0]);
                     continue;
                 }
                 Direction d;
@@ -41,14 +41,14 @@ public class ConsolePlayer implements IPlayer {
                     d = Direction.valueOf(parts[1]);
                 }
                 catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
+                    io.printLine("Invalid direction: " + parts[1]);
                     continue;
                 }
                 try {
                     board.placeShip(ship, p.x, p.y, d);
                 }
                 catch (InvalidPlacementException e) {
-                    System.out.println(e.getMessage());
+                    io.printLine(e.getMessage());
                     continue;
                 }
                 break;
@@ -63,9 +63,8 @@ public class ConsolePlayer implements IPlayer {
             try {
                 return new Point(str);
             }
-            catch (InvalidPlacementException e) {
-                System.out.println(e);
-                continue;
+            catch (IllegalArgumentException e) {
+                io.printLine("Invalid format of the point: " + str);
             }
         }
     }

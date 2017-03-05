@@ -5,12 +5,12 @@ public abstract class GamePlay {
     protected IBoard board_A;
     protected IBoard board_B;
 
-    protected IShipList ships;
+    protected ShipList ships;
 
     protected IPlayer player_A;
     protected IPlayer player_B;
 
-    public void setShips(IShipList ships) {
+    public void setShips(ShipList ships) {
         this.ships = ships;
     }
 

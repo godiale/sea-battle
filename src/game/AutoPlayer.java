@@ -16,7 +16,7 @@ public abstract class AutoPlayer implements IPlayer {
     }
 
     @Override
-    public void placeShips(IBoard board, IShipList ships) {
+    public void placeShips(IBoard board, ShipList ships) {
         sizeX = board.getXSize();
         sizeY = board.getYSize();
         myStrikes = new int[sizeX][sizeY];

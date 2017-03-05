@@ -12,7 +12,7 @@ public class SeaBattle {
 
         gameplay.setBoard_A(boardFactory.createBoard());
         gameplay.setBoard_B(boardFactory.createBoard());
-        gameplay.setShips(new ManualShipList(new Launch(),
+        gameplay.setShips(new ShipList(new Launch(),
                                              new Launch(),
                                              new Boat(),
                                              new Boat()));
