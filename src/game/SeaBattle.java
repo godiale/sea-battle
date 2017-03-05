@@ -16,7 +16,7 @@ public class SeaBattle {
                                              new Launch(),
                                              new Boat(),
                                              new Boat()));
-        gameplay.setPlayer_A(new ConsolePlayer());
+        gameplay.setPlayer_A(new ConsolePlayer(new SystemConsoleIO()));
         gameplay.setPlayer_B(new RandomAutoPlayer("Random"));
 
         gameplay.run();

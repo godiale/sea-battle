@@ -1,30 +1,15 @@
 package game;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import game.IBoard.InvalidPlacementException;
 
 public class ConsolePlayer implements IPlayer {
 
     private String name;
+    private IConsoleIO io;
 
-    private String readLine(String prompt) {
-        System.out.print(prompt);
-        while (true) {
-            try {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-                return bufferedReader.readLine();
-            }
-            catch (IOException e) {
-                System.out.println("Error occured (will retry): " + e);
-            }
-        }
-    }
-
-    public ConsolePlayer() {
-        name = readLine("Please enter your name: ");
+    public ConsolePlayer(IConsoleIO io) {
+        this.io = io;
+        this.name = io.readLine("Please enter your name: ");
     }
 
     @Override
@@ -37,7 +22,7 @@ public class ConsolePlayer implements IPlayer {
         System.out.println("Please place ships");
         for (IShip ship : ships.getShips()) {
             while (true) {
-                String placement = readLine(ship.getName() + ": ");
+                String placement = io.readLine(ship.getName() + ": ");
                 String[] parts = placement.split(",");
                 if (parts.length < 2) {
                     System.out.println("Please enter point and direction");
@@ -74,7 +59,7 @@ public class ConsolePlayer implements IPlayer {
     @Override
     public Point nextStrike() {
         while (true) {
-            String str = readLine("Your strike: ");
+            String str = io.readLine("Your strike: ");
             try {
                 return new Point(str);
             }
@@ -87,6 +72,6 @@ public class ConsolePlayer implements IPlayer {
 
     @Override
     public void recordMove(Point strike, Answer answer) {
+        // Person has to do this manually :)
     }
-
 }
