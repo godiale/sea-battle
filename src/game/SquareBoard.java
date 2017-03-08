@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 public class SquareBoard implements IBoard {
 
@@ -75,6 +76,17 @@ public class SquareBoard implements IBoard {
         Predicate<Point> isIntersection = v -> coord2ships[v.x][v.y] >= 0;
         if (placedShip.getCoord().stream().anyMatch(isIntersection)) {
             throw new InvalidPlacementException("Ships intersection");
+        }
+
+        List<Point> halo = new ArrayList<Point>();
+        IntStream.rangeClosed(-1, 1).forEach(
+                x -> IntStream.rangeClosed(-1, 1).forEach(
+                        y -> halo.add(new Point(x,y))));
+        Predicate<Point> isHaloIntesection = v -> halo.stream().anyMatch(
+                h -> isOutBoard.negate().and(isIntersection).test(
+                        new Point(v.x+h.x, v.y+h.y)));
+        if (placedShip.getCoord().stream().anyMatch(isHaloIntesection)) {
+            throw new InvalidPlacementException("Ships too close");
         }
 
         final int shipIdx = ships2coord.size();
