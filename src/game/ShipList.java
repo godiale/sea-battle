@@ -13,6 +13,10 @@ public class ShipList {
         Stream.of(ships).forEach(ship -> this.ships.add(ship));
     }
 
+    public void add(IShip ship) {
+        ships.add(ship);
+    }
+
     public List<IShip> getShips() {
         return ships;
     }
