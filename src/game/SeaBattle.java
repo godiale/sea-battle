@@ -13,9 +13,9 @@ public class SeaBattle {
         gameplay.setBoard_A(boardFactory.createBoard());
         gameplay.setBoard_B(boardFactory.createBoard());
         gameplay.setShips(new ShipList(new Launch(),
-                                             new Launch(),
-                                             new Boat(),
-                                             new Boat()));
+                                       new Launch(),
+                                       new Boat(),
+                                       new Boat()));
         gameplay.setPlayer_A(new ConsolePlayer(new SystemConsoleIO()));
         gameplay.setPlayer_B(new RandomAutoPlayer("Random"));
 
